@@ -1,0 +1,10 @@
+.dropdown_image{
+    max-height:100px;
+}
+#movie_list{
+    background-color:skyblue;
+    max-width:385px;
+}
+.dropdown-content{
+    max-width:380px;
+}
