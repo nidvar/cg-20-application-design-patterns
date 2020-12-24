@@ -6,15 +6,23 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
     <link rel='stylesheet' type='text/css' href='style.css'>
 </head>
 <body>
-    <h1>Section 20</h1>
+    <div id='mycontainer'>
+        <h1 class="title">Section 20</h1>
 
-    <input id='movie_search' />
+        <input id='movie_search' />
+    
+        <div id='movie_list'></div>
+        <div id='chosen_movie'></div>
+    </div>
+    
 
-    <div id='movie_list'></div>
 
+
+    <script src='data.js'></script>
     <script src='utilities.js'></script>
     <script src='script.js'></script>
 </body>

@@ -1,5 +1,5 @@
 const api_key = '8d9d75cd'
-
+console.log(movie_data)
 const grab_movies = async (search)=>{
     const response = await axios.get(`http://www.omdbapi.com/`,{
         params:{
@@ -27,6 +27,16 @@ const grab_single_movie = async (movieID)=>{
     })
 
     console.log(response.data)
+
+    document.getElementById('chosen_movie').innerHTML = `
+    <div>
+        <h2>${response.data.Title} (${response.data.Year})</h2>
+        <p>${response.data.Runtime} | ${response.data.Genre} | ${response.data.Released}</p>
+        <img class='single_image' src='${response.data.Poster}'>
+        <p>${response.data.Plot}</p>
+        <p><strong>Director:</strong> ${response.data.Director}</p>
+    </div>
+    `
 }
 
 const execute_search =  async (e)=>{
@@ -61,7 +71,5 @@ document.querySelector('body').addEventListener('click', (e)=>{
         document.getElementById('movie_list').innerHTML=''
     }
 })
-
-
 
 grab_movies();

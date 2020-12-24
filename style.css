@@ -1,3 +1,6 @@
+#mycontainer{
+    margin:20px;
+}
 .dropdown_image{
     max-height:100px;
 }
@@ -10,4 +13,19 @@
 }
 #movie_search{
     min-width:380px;
+}
+
+p{
+    margin:0;
+}
+h2{
+    font-size:30px;
+    font-weight:bolder;
+}
+h5{
+    font-size:20px;
+    font-weight:bold;
+}
+.single_image{
+    margin:10px 0 10px 0;
 }
