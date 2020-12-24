@@ -7,10 +7,13 @@ const grab_data = async (search)=>{
             s: search
         }
     })
-
+    if(search==''){
+        return []
+    }
     if(response.data.Response == 'False'){
         return [{Title: 'Movie not found', Poster:''}]
     }else{
+        console.log(response.data.Search)
         return response.data.Search
     }
 }
@@ -23,12 +26,19 @@ const execute_search =  async (e)=>{
         const div = document.createElement('div')
         div.innerHTML = `
             <div class="dropdown-content">
-                <a href="#" class="dropdown-item">
-                    <img class='dropdown_image' src='${item.Poster}'> ${item.Title}
+                <a href="#" class="dropdown-item" id='${item.imdbID}'>
+                    <img class='dropdown_image' src='${item.Poster=='N/A'?'':item.Poster}'> ${item.Title}
                 </a>
             </div>
         `
         document.getElementById('movie_list').appendChild(div)
+
+        document.getElementById(`${item.imdbID}`).addEventListener('click',(e)=>{
+            console.log(e.target)
+            document.getElementById('movie_search').value = `${item.Title}`;
+            document.getElementById('movie_list').innerHTML=''
+        })
+
     }
 }
 
