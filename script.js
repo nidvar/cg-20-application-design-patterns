@@ -1,6 +1,7 @@
 const api_key = '8d9d75cd'
 console.log(movie_data)
-const grab_movies = async (search)=>{
+
+const movie_list = async (search)=>{
     const response = await axios.get(`http://www.omdbapi.com/`,{
         params:{
             apikey: api_key,
@@ -18,53 +19,44 @@ const grab_movies = async (search)=>{
     }
 }
 
-const grab_single_movie = async (movieID)=>{
-    const response = await axios.get(`http://www.omdbapi.com/`,{
-        params:{
-            apikey: api_key,
-            i: movieID
-        }
-    })
 
-    console.log(response.data)
+const search_function = (user_input, element_to_display_list,element_to_display_single_movie)=>{
+    const execute_search =  async (e)=>{
 
-    document.getElementById('chosen_movie').innerHTML = `
-    <div>
-        <h2>${response.data.Title} (${response.data.Year})</h2>
-        <p>${response.data.Runtime} | ${response.data.Genre} | ${response.data.Released}</p>
-        <img class='single_image' src='${response.data.Poster}'>
-        <p>${response.data.Plot}</p>
-        <p><strong>Director:</strong> ${response.data.Director}</p>
-    </div>
-    `
-}
+        element_to_display_list.innerHTML = ''
 
-const execute_search =  async (e)=>{
-    const response = await grab_movies(e.target.value)
-    document.getElementById('movie_list').innerHTML = ''
-    
-    for(let item of response){
-        const div = document.createElement('div')
-        div.innerHTML = `
-            <div class="dropdown-content">
-                <a href="#" class="dropdown-item" id='${item.imdbID}'>
-                    <img class='dropdown_image' src='${item.Poster=='N/A'?'':item.Poster}'> ${item.Title}
-                </a>
-            </div>
-        `
-        document.getElementById('movie_list').appendChild(div)
+        const response = await movie_list(e.target.value)
+        
+                        for(let item of response){
+                            const div = document.createElement('div')
+                            div.innerHTML = `
+                                <div class="dropdown-content">
+                                    <a href="#" class="dropdown-item" id='${item.imdbID}'>
+                                        <img class='dropdown_image' src='${item.Poster=='N/A'?'':item.Poster}'> ${item.Title}
+                                    </a>
+                                </div>
+                            `
+                            element_to_display_list.appendChild(div)
 
-        document.getElementById(`${item.imdbID}`).addEventListener('click',(e)=>{
-            console.log(item.imdbID)
-            grab_single_movie(item.imdbID)
-            document.getElementById('movie_search').value = `${item.Title}`;
-            document.getElementById('movie_list').innerHTML=''
-        })
+                            document.getElementById(`${item.imdbID}`).addEventListener('click',(e)=>{
+                                
+                                display_chosen_movie(element_to_display_single_movie, item.imdbID)
+
+
+                                user_input.value = `${item.Title}`;
+                                element_to_display_list.innerHTML=''
+                            })
+                    
+                        }
+
+
+
 
     }
+    user_input.addEventListener('input', timeoutDelayFunction(execute_search, 1000))
 }
 
-document.getElementById('movie_search').addEventListener('input', timeoutDelayFunction(execute_search, 1000))
+search_function(document.getElementById('movie_search'), document.getElementById('movie_list'), document.getElementById('chosen_movie'))
 
 document.querySelector('body').addEventListener('click', (e)=>{
     if(!document.getElementById('movie_list').contains(e.target)){
@@ -72,4 +64,4 @@ document.querySelector('body').addEventListener('click', (e)=>{
     }
 })
 
-grab_movies();
+movie_list();
