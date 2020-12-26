@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Section 20</title>
+    <title>Movie comparison</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
@@ -10,17 +10,19 @@
     <link rel='stylesheet' type='text/css' href='style.css'>
 </head>
 <body>
-
+    <div class='mycover'>
+        <h1 class="mytitle">Movie comparison</h1>
+    </div>
     <div class='mycontainer'>
-        <h1 class="title">Section 20</h1>
+        
         <div class='twomovies'>
             <div class='mybox'>
-                <input id='movie_search'/>
+                <input id='movie_search' placeholder=" Search Movie"/>
                 <div id='movie_list'></div>
                 <div id='chosen_movie'></div>
             </div>
             <div class='mybox'>
-                <input id='movie_search2'/>
+                <input id='movie_search2' placeholder=" Search Movie"/>
                 <div id='movie_list2'></div>
                 <div id='chosen_movie2'></div>
             </div>

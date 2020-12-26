@@ -23,8 +23,27 @@ const movie_list = async (search)=>{
     if(response.data.Response == 'False'){
         return [{Title: 'Movie not found', Poster:''}]
     }else{
-        console.log(response.data.Search)
         return response.data.Search
+    }
+}
+
+const run_comparison = ()=>{
+    const left_side = document.querySelectorAll('.chosen_movie_item')
+    const right_side = document.querySelectorAll('.chosen_movie2_item')
+    if(left_side.length > 0 && right_side.length > 0){
+        left_side.forEach((item, index)=>{
+            console.log(`${item.dataset.value} + ${right_side[index].dataset.value}`)
+            if(item.dataset.value == 'N/A' || right_side[index].dataset.value == 'N/A'){
+                right_side[index].classList.add('normal')
+                left_side[index].classList.add('normal')
+                return
+            }
+            if(item.dataset.value > right_side[index].dataset.value){
+                left_side[index].classList.add('win')
+            }else{
+                right_side[index].classList.add('win')
+            }
+        })
     }
 }
 
@@ -36,22 +55,25 @@ const display_chosen_movie = async (destination_element, imdb_movieid)=>{
         }
     })
     const result = response.data
-
     destination_element.innerHTML = `
     <div class='dualbox'>
         <img class='single_image' src='${result.Poster}'>
         <div>
             <h3>${result.Title} (${result.Year})</h3>
             <p>${result.Runtime} | ${result.Genre} | ${result.Released}</p>
+            <br />
             <p>${result.Plot}</p>
         </div>
     </div>
-            <p><strong>Director:</strong> ${result.Director}</p>
-            <p><strong>Actors:</strong> ${result.Actors}</p>
-            <p><strong>Writers:</strong> ${result.Writer}</p>
-            <p><strong>Awards:</strong> ${result.Awards}</p>
-        
+    <p><strong>Director:</strong> ${result.Director}</p>
+    <p><strong>Actors:</strong> ${result.Actors}</p>
+    <p><strong>Awards:</strong> ${result.Awards}</p>
+    <p class=${destination_element.getAttribute('id')}_item data-value=${result.BoxOffice}><strong>Box Office:</strong> ${result.BoxOffice}</p>
+    <p class=${destination_element.getAttribute('id')}_item data-value=${result.Metascore}><strong>Metascore:</strong> ${result.Metascore}</p>
+    <p class=${destination_element.getAttribute('id')}_item data-value=${result.imdbRating}><strong>IMDb Rating:</strong> ${result.imdbRating}</p>
+    <p class=${destination_element.getAttribute('id')}_item data-value=${result.imdbVotes}><strong>IMDb Votes:</strong> ${result.imdbVotes}</p>
     `
+    run_comparison()
 }
 
 const render_list = (item)=>{
